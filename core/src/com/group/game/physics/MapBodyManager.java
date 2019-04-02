@@ -123,7 +123,7 @@ public class MapBodyManager {
             FixtureDef standard = new FixtureDef();
             standard.density = 1.0f;
             standard.friction = .15f;
-            standard.restitution = 0.25f;
+            standard.restitution = 0f;
 
             if(shape == null){ logger.error("SHAPE NULL ");}
             standard.shape = shape;

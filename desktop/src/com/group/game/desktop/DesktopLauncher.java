@@ -10,8 +10,8 @@ public class DesktopLauncher {
 		config.setFromDisplayMode(LwjglApplicationConfiguration.getDesktopDisplayMode());
 		config.fullscreen = false;
 		config.resizable = false;
-		config.width /= 1.5f;
-		config.height /= 1.5f;
+		config.width = 1280;
+		config.height = 800;
 		new LwjglApplication(new TBWGame(), config);
 	}
 }
