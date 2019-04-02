@@ -30,7 +30,7 @@ public class Constants {
 
     public static final float DENSITY=.5f;
     public static final float FRICTION=.5f;
-    public static final float RESTITUTION=.5f;
+    public static final float RESTITUTION= 0f;
     //impulse strength
     public static final float FORCE_X=30f;
     public static final float FORCE_Y=30f;
