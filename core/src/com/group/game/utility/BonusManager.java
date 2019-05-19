@@ -25,7 +25,6 @@ import static com.group.game.utility.Constants.TILE_SIZE;
 
 /* Uses references that will point to the assignment 1 work.
 * Will not function correctly until the proper references are fixed.
-*
 */
 
 public class BonusManager {
