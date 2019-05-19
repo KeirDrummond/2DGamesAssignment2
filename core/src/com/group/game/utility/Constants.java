@@ -25,7 +25,7 @@ public class Constants {
     public static final int VELOCITY_ITERATIONS = 6;
     public static final int POSITION_ITERATIONS = 2;
 
-    public static final String BACKGROUND = "tileData/fullTrain_V2.tmx";
+    public static final String BACKGROUND = "tileData/assignment_two.tmx";
     public static final String PHYSICS_MATERIALS_PATH = "tileData/physicsData.json";
 
     public static final float DENSITY=.5f;
