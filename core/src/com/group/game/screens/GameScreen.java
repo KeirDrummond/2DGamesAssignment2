@@ -5,11 +5,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.group.game.TBWGame;
 import com.group.game.bodies.PlayerCharacter;
 import com.group.game.physics.WorldManager;
+import com.group.game.utility.BonusManager;
 import com.group.game.utility.CameraManager;
 import com.group.game.utility.Constants;
 import com.group.game.utility.HUD;
@@ -31,6 +33,7 @@ public class GameScreen extends ScreenAdapter {
     private TiledMap tiledMap;
     private OrthogonalTiledMapRenderer orthogonalTiledMapRenderer;
     private PlayerCharacter smif;
+    private BonusManager bonusManager;
     private HUD gameHUD;
     private CameraManager cameraManager;
     private float frameDelta = 0;
@@ -52,6 +55,7 @@ public class GameScreen extends ScreenAdapter {
         if(!WorldManager.isInitialised()){WorldManager.initialise(game,tiledMap);}
         //player
         smif = new PlayerCharacter(PLAYER_ATLAS_PATH,SMALL,START_POSITION);
+        bonusManager = new BonusManager(smif);
         cameraManager = new CameraManager(game.camera,tiledMap);
         cameraManager.setTarget(smif);
         gameHUD = new HUD(game.batch,smif,game);
@@ -61,6 +65,7 @@ public class GameScreen extends ScreenAdapter {
     public void render(float delta) {
         frameDelta += delta;
         smif.update(frameDelta);
+        bonusManager.update(frameDelta);
         gameHUD.update(delta);
         game.batch.setProjectionMatrix(game.camera.combined);
         clearScreen();
@@ -74,6 +79,7 @@ public class GameScreen extends ScreenAdapter {
         cameraManager.update();
         game.batch.begin();
         smif.draw(game.batch);
+        bonusManager.draw(game.batch);
         game.batch.end();
         gameHUD.stage.draw();
         WorldManager.getInstance().debugRender();

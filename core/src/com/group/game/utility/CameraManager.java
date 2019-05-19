@@ -50,4 +50,6 @@ public class CameraManager {
         }
         return false;
     }
+
+    public float GetHeight() {return camera.viewportHeight;}
 }

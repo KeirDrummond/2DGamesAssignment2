@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
+import com.badlogic.gdx.utils.Logger;
 import com.group.game.physics.WorldManager;
 import com.group.game.utility.CurrentDirection;
 import com.group.game.utility.IWorldObject;
@@ -31,9 +32,14 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private Body playerBody;
     private boolean facingRight =true;
 
+    private Logger logger;
+
+    private int ammo = 0;
+
     public PlayerCharacter(String atlas, Texture t, Vector2 pos) {
         super(atlas, t, pos);
         buildBody();
+        logger = new Logger("Player", Logger.DEBUG);
     }
 
     @Override
@@ -102,5 +108,10 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     @Override
     public void reaction() {
 
+    }
+
+    public void addAmmo(int theAmmo)
+    {
+        ammo += theAmmo;
     }
 }
