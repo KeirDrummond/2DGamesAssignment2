@@ -50,7 +50,7 @@ public class Constants {
     //player start position
     public static final Vector2 START_POSITION = new Vector2(10,10);
 
-    public static final String POWER_UP_ATLAS_PATH = "atlas/revolver_ammo.atlas";
+    public static final String REVOLVER_AMMO_PICKUP_PATH = "atlas/revolver_ammo.atlas";
     public static final String REVOLVER_AMMO_PICKUP_SOUND_PATH = "sounds/revolverpickup.wav";
 
 

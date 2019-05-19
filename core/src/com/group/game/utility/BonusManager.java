@@ -19,7 +19,7 @@ import java.util.Iterator;
 
 //import static com.group.game.utility.Constants.MAX_TIME_TO_NEXT_BONUS;
 import static com.group.game.utility.Constants.MEDIUM;
-import static com.group.game.utility.Constants.POWER_UP_ATLAS_PATH;
+import static com.group.game.utility.Constants.REVOLVER_AMMO_PICKUP_PATH;
 import static com.group.game.utility.Constants.SMALL;
 import static com.group.game.utility.Constants.TILE_SIZE;
 
@@ -74,7 +74,7 @@ public class BonusManager {
 
             if (powerName.equals("RevolverAmmo"))
             {
-                bonusCollection[i] = new RevolverAmmo(POWER_UP_ATLAS_PATH, SMALL, pos);
+                bonusCollection[i] = new RevolverAmmo(REVOLVER_AMMO_PICKUP_PATH, SMALL, pos);
             }
             else
             {
