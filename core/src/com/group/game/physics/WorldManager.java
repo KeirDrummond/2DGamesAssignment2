@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.Box2D;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.group.game.TBWGame;
+import com.group.game.utility.BonusManager;
 
 import static com.group.game.utility.Constants.PHYSICS_MATERIALS_PATH;
 import static com.group.game.utility.Constants.POSITION_ITERATIONS;
@@ -26,6 +27,7 @@ public class WorldManager {
     private Box2DDebugRenderer debugRenderer;
     private static TBWGame game;
     private MapBodyManager mapBodyManager;
+    private BonusManager bonusManager;
     private static Map map;
     private static boolean initialised=false;
 
@@ -70,5 +72,7 @@ public class WorldManager {
             debugRenderer.render(world, game.camera.combined);
         game.batch.end();
     }
+
+    public Map getMap(){return map;}
 
 }
