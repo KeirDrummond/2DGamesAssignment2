@@ -20,12 +20,12 @@ public class Constants {
     //Animation Speed
     public static final float FRAME_DURATION = 1.0f / 30.0f;
     public static final float TIME_STEP=1/60f;
-    public static final int LEVEL_TIME = 30;
+    public static final int LEVEL_TIME = 999;
 
     public static final int VELOCITY_ITERATIONS = 6;
     public static final int POSITION_ITERATIONS = 2;
 
-    public static final String BACKGROUND = "tileData/assignment_two.tmx";
+    public static final String BACKGROUND = "tileData/fullTrain_V3.1.tmx";
     public static final String PHYSICS_MATERIALS_PATH = "tileData/physicsData.json";
 
     public static final float DENSITY=.5f;
@@ -49,6 +49,8 @@ public class Constants {
     public static final Texture TINY = new Texture(Gdx.files.internal("gfx/tinySize.png"));
     //player start position
     public static final Vector2 START_POSITION = new Vector2(10,10);
+
+    public static final String BACKGROUND_PATH = "backgrounds/background_V1-1.png";
 
     public static final String REVOLVER_AMMO_PICKUP_PATH = "atlas/revolver_ammo.atlas";
     public static final String REVOLVER_AMMO_PICKUP_SOUND_PATH = "sounds/revolverpickup.wav";
