@@ -30,7 +30,7 @@ public abstract class AnimatedSprite extends Sprite {
         super(t,PLAYER_WIDTH,PLAYER_HEIGHT);
         this.setX(pos.x);
         this.setY(pos.y);
-        playmode = Animation.PlayMode.NORMAL;
+        playmode = Animation.PlayMode.LOOP;
         initAtlas(atlasString);
     }
 
@@ -44,7 +44,18 @@ public abstract class AnimatedSprite extends Sprite {
         Array<TextureAtlas.AtlasRegion> regions = new
                 Array<TextureAtlas.AtlasRegion>(atlas.getRegions());
         regions.sort(new RegionComparator());
-        animation = new Animation(FRAME_DURATION,regions, Animation.PlayMode.NORMAL);
+        animation = new Animation(FRAME_DURATION,regions, Animation.PlayMode.LOOP);
+    }
+
+    public Animation newAnimation(String atlasString, String tag){
+        atlas = new TextureAtlas(Gdx.files.internal(atlasString));
+        Animation theAnimation;
+        //load animations
+        Array<TextureAtlas.AtlasRegion> regions = new
+                Array<TextureAtlas.AtlasRegion>(atlas.findRegions(tag));
+        regions.sort(new RegionComparator());
+        theAnimation = new Animation(FRAME_DURATION,regions, Animation.PlayMode.LOOP);
+        return theAnimation;
     }
 
     private static class RegionComparator implements Comparator<TextureAtlas.AtlasRegion> {
@@ -53,5 +64,7 @@ public abstract class AnimatedSprite extends Sprite {
             return region1.name.compareTo(region2.name);
         }
     }
+
+    public void setAnimation(Animation theAnimation){this.animation = theAnimation;}
 
 }

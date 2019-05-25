@@ -1,5 +1,6 @@
 package com.group.game.bodies;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
@@ -10,14 +11,14 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Logger;
 import com.group.game.physics.WorldManager;
 import com.group.game.utility.CurrentDirection;
+import com.group.game.utility.GameData;
 import com.group.game.utility.IWorldObject;
 
 import static com.group.game.utility.Constants.DENSITY;
-import static com.group.game.utility.Constants.FORCE_X;
 import static com.group.game.utility.Constants.FORCE_Y;
 import static com.group.game.utility.Constants.FRICTION;
-import static com.group.game.utility.Constants.MAX_HEIGHT;
 import static com.group.game.utility.Constants.MAX_VELOCITY;
+import static com.group.game.utility.Constants.MOVESPEED;
 import static com.group.game.utility.Constants.PLAYER_OFFSET_X;
 import static com.group.game.utility.Constants.PLAYER_OFFSET_Y;
 import static com.group.game.utility.Constants.RESTITUTION;
@@ -32,12 +33,24 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private Body playerBody;
     private boolean facingRight =true;
 
-    private Logger logger;
+    private float movespeed = MOVESPEED;
+    private float MAXmovespeed = MAX_VELOCITY;
+    private float jumpforce = FORCE_Y;
 
+    private Logger logger;
+    private GameData gameData;
+
+    private Animation idleAnimation;
+    private Animation runAnimation;
     private int ammo = 0;
+
+    CurrentDirection currentDirection = CurrentDirection.NONE;
 
     public PlayerCharacter(String atlas, Texture t, Vector2 pos) {
         super(atlas, t, pos);
+        idleAnimation = super.newAnimation(atlas, "character_idle");
+        super.setAnimation(idleAnimation);
+        runAnimation = super.newAnimation(atlas, "character_run");
         buildBody();
         logger = new Logger("Player", Logger.DEBUG);
     }
@@ -59,37 +72,51 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
         super.update(stateTime);
         this.setPosition(playerBody.getPosition().x-PLAYER_OFFSET_X,playerBody.getPosition().y-PLAYER_OFFSET_Y);
         if(!facingRight){flip(true,false);}
+
+        Vector2 vel = playerBody.getLinearVelocity();
+        Vector2 pos = playerBody.getPosition();
+
+        switch(currentDirection){
+            case UP:
+                if (vel.y == 0) {
+                    playerBody.applyLinearImpulse(0, jumpforce, pos.x, pos.y, true);
+                }
+                break;
+            case LEFT:
+                facingRight = false;
+                playerBody.applyLinearImpulse(-movespeed, 0, pos.x, pos.y, true);
+                break;
+            case RIGHT:
+                facingRight = true;
+                playerBody.applyLinearImpulse(movespeed, 0, pos.x, pos.y, true);
+        }
+
+        if (vel.x > MAXmovespeed)
+            playerBody.setLinearVelocity(MAXmovespeed, vel.y);
+        if (vel.x < -MAXmovespeed)
+            playerBody.setLinearVelocity(-MAXmovespeed, vel.y);
+
+        if (vel.x != 0)
+            setAnimation(runAnimation);
+        else
+            setAnimation(idleAnimation);
+
     }
 
     public void move(CurrentDirection direction){
-        Vector2 vel = playerBody.getLinearVelocity();
-        Vector2 pos = playerBody.getPosition();
         switch(direction){
             case LEFT:
-                facingRight=false;
-                playmode = Animation.PlayMode.LOOP;
-                if (vel.x > -MAX_VELOCITY) {
-                playerBody.applyLinearImpulse(-FORCE_X, 0, pos.x, pos.y, true);
-                }
+                this.currentDirection = CurrentDirection.LEFT;
                 break;
             case RIGHT:
-                facingRight=true;
-                playmode = Animation.PlayMode.LOOP;
-                if (vel.x < MAX_VELOCITY) {
-                    playerBody.applyLinearImpulse(FORCE_X, 0, pos.x, pos.y, true);
-                }
+                this.currentDirection = CurrentDirection.RIGHT;
                 break;
             case UP:
-                playmode = Animation.PlayMode.NORMAL;
-                if (pos.y< MAX_HEIGHT && vel.y < MAX_VELOCITY) {
-                    playerBody.applyLinearImpulse(0, FORCE_Y, pos.x, pos.y, true);
-                }
+                this.currentDirection = CurrentDirection.UP;
                 break;
-            case STOP:
-                if(vel.x > -8 & vel.x < 8)
-                    playmode = Animation.PlayMode.NORMAL;
+            case NONE:
+                this.currentDirection = CurrentDirection.NONE;
         }
-        animation.setPlayMode(playmode);
     }
 
     @Override
@@ -110,8 +137,17 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
 
     }
 
-    public void addAmmo(int theAmmo)
+    public void fireGun(){
+        if (ammo > 0)
+        {
+            ammo--;
+            gameData.getInstance().setAmmo(this.ammo);
+        }
+    }
+
+    public void addAmmo(int ammo)
     {
-        ammo += theAmmo;
+        this.ammo += ammo;
+        gameData.getInstance().setAmmo(this.ammo);
     }
 }

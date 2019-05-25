@@ -8,11 +8,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -20,6 +23,8 @@ import com.badlogic.gdx.utils.viewport.Viewport;
 import com.group.game.TBWGame;
 import com.group.game.bodies.PlayerCharacter;
 import com.group.game.screens.EndScreen;
+
+import static com.group.game.utility.Constants.MEDIUM;
 
 public class HUD implements Disposable {
 
@@ -29,19 +34,19 @@ public class HUD implements Disposable {
     Table tableData;
     Table tableControls;
     // Navigation widgets
-    private Button leftBtn,rightBtn,upBtn,downBtn;
+    private Button gunBtn, leftBtn,rightBtn,upBtn;
     private PlayerCharacter playerCharacter;
     private TBWGame game;
 
-    //score && time tracking variables
+    //ammo && time tracking variables
     private Integer worldTimer;
     private float timeCount;
-    private static Integer score;
+    private static Integer ammo;
     private boolean timeUp;
 
     //Scene2D Widgets
     private Label countdownLabel, timeLabel, linkLabel;
-    private static Label scoreLabel;
+    private static Label ammoLabel;
 
     public HUD(SpriteBatch sb, PlayerCharacter playerCharacter, TBWGame tbwGame) {
         this.playerCharacter = playerCharacter;
@@ -49,7 +54,7 @@ public class HUD implements Disposable {
         //define tracking variables
         worldTimer = Constants.LEVEL_TIME;
         timeCount = 0;
-        score = 0;
+        ammo = 0;
         //new camera used to setup the HUD viewport seperate from the main Game Camera
         //define stage using that viewport and games spritebatch
         viewport = new FitViewport(Constants.VIRTUAL_WIDTH,
@@ -62,48 +67,48 @@ public class HUD implements Disposable {
         tableControls.top();
         tableControls.setFillParent(true);
 
-        createScoreAndTimer();
+        createAmmoAndTimer();
         createNavButtons();
         stage.addActor(tableData);
         stage.addActor(tableControls);
         Gdx.input.setInputProcessor(stage);
     }
 
-    private void createScoreAndTimer(){
+    private void createAmmoAndTimer(){
         countdownLabel = new Label(String.format("%03d", worldTimer),
                 new Label.LabelStyle(new BitmapFont(), Color.RED));
-        scoreLabel = new Label(String.format("%03d", score),
+        ammoLabel = new Label(String.format("%03d", ammo),
                 new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         timeLabel = new Label("COUNTDOWN",
                 new Label.LabelStyle(new BitmapFont(), Color.RED));
-        linkLabel = new Label("POINTS",
+        linkLabel = new Label("AMMO",
                 new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         //labels added to table using padding and expandX
         tableData.add(linkLabel).padBottom(5).padLeft(120);
-        tableData.add(scoreLabel).expandX().padBottom(5);
+        tableData.add(ammoLabel).expandX().padBottom(5);
         tableData.add(timeLabel).padBottom(5).padRight(20);
         tableData.add(countdownLabel).expandX().padBottom(5);
     }
 
     private void createNavButtons(){
+        Texture actorGunBtn =
+                new Texture(Gdx.files.internal("buttons/gun.png"));
         Texture actorUpBtn =
                 new Texture(Gdx.files.internal("buttons/up.png"));
-        Texture actorDownBtn =
-                new Texture(Gdx.files.internal("buttons/down.png"));
         Texture actorLeftBtn =
                 new Texture(Gdx.files.internal("buttons/left.png"));
         Texture actorRightBtn =
                 new Texture(Gdx.files.internal("buttons/right.png"));
 
+        Button.ButtonStyle buttonStyleGun = new Button.ButtonStyle();
+        buttonStyleGun.up =
+                new TextureRegionDrawable(new TextureRegion(actorGunBtn));
+        gunBtn = new Button(buttonStyleGun);
+
         Button.ButtonStyle buttonStyleUp = new Button.ButtonStyle();
         buttonStyleUp.up =
                 new TextureRegionDrawable(new TextureRegion(actorUpBtn));
         upBtn = new Button( buttonStyleUp );
-
-        Button.ButtonStyle buttonStyleDown = new Button.ButtonStyle();
-        buttonStyleDown.up =
-                new TextureRegionDrawable(new TextureRegion(actorDownBtn));
-        downBtn = new Button( buttonStyleDown );
 
         Button.ButtonStyle buttonStyleLeft = new Button.ButtonStyle();
         buttonStyleLeft.up =
@@ -116,41 +121,67 @@ public class HUD implements Disposable {
         rightBtn = new Button( buttonStyleRight );
 
         //add buttons
-        tableControls.add(upBtn).padLeft(50);
-        tableControls.add(downBtn).expandX();
-        tableControls.add(leftBtn).expandX().padLeft(150);
+        tableControls.add(gunBtn);
+        tableControls.add(leftBtn).expandX().padLeft(25);
+        tableControls.add(upBtn).expandX();
         tableControls.add(rightBtn).expandX().padRight(25);
         //add listeners to the buttons
         addButtonListeners();
     }
 
     private void addButtonListeners(){
-        //up
-        upBtn.addListener(new ChangeListener() {
+        gunBtn.addListener(new InputListener()
+        {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                playerCharacter.move(CurrentDirection.UP);
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
+                playerCharacter.fireGun();
+                return true;
             }
         });
-        //down
-        downBtn.addListener(new ChangeListener() {
+        //up
+        upBtn.addListener(new InputListener()
+        {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
-
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
+                playerCharacter.move(CurrentDirection.UP);
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+            {
+                playerCharacter.move(CurrentDirection.NONE);
             }
         });
         //left
-        leftBtn.addListener(new ChangeListener() {
+        leftBtn.addListener(new InputListener()
+        {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
                 playerCharacter.move(CurrentDirection.LEFT);
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+            {
+                playerCharacter.move(CurrentDirection.NONE);
             }
         });
         //right
-        rightBtn.addListener(new ChangeListener() {
+        rightBtn.addListener(new InputListener()
+        {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
                 playerCharacter.move(CurrentDirection.RIGHT);
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+            {
+                playerCharacter.move(CurrentDirection.NONE);
             }
         });
     }
@@ -162,7 +193,7 @@ public class HUD implements Disposable {
                 worldTimer--;
             } else {
                 timeUp = true;
-                GameData.getInstance().setScore(score);
+                GameData.getInstance().setAmmo(ammo);
                 GameData.getInstance().setTime(worldTimer);
                 game.setScreen(new EndScreen());
             }
@@ -171,9 +202,9 @@ public class HUD implements Disposable {
         }
     }
 
-    public static void addScore(int value) {
-        score += value;
-        scoreLabel.setText(String.format("%06d", score));
+    public static void addAmmo(int value) {
+        ammo += value;
+        ammoLabel.setText(String.format("%06d", ammo));
     }
 
     @Override
@@ -185,13 +216,12 @@ public class HUD implements Disposable {
         return timeUp;
     }
 
-
-    public static Label getScoreLabel() {
-        return scoreLabel;
+    public static Label getAmmoLabel() {
+        return ammoLabel;
     }
 
-    public static Integer getScore() {
-        return score;
+    public static Integer getAmmo() {
+        return ammo;
     }
 
 
