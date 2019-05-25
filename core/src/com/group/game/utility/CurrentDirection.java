@@ -8,5 +8,5 @@ public enum CurrentDirection {
     LEFT,
     RIGHT,
     UP,
-    STOP
+    NONE
 }

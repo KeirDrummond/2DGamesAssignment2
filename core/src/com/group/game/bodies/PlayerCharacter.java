@@ -14,11 +14,9 @@ import com.group.game.utility.CurrentDirection;
 import com.group.game.utility.IWorldObject;
 
 import static com.group.game.utility.Constants.DENSITY;
-import static com.group.game.utility.Constants.FORCE_X;
-import static com.group.game.utility.Constants.FORCE_Y;
 import static com.group.game.utility.Constants.FRICTION;
-import static com.group.game.utility.Constants.MAX_HEIGHT;
-import static com.group.game.utility.Constants.MAX_VELOCITY;
+import static com.group.game.utility.Constants.JUMP_FORCE;
+import static com.group.game.utility.Constants.MOVESPEED;
 import static com.group.game.utility.Constants.PLAYER_OFFSET_X;
 import static com.group.game.utility.Constants.PLAYER_OFFSET_Y;
 import static com.group.game.utility.Constants.RESTITUTION;
@@ -33,11 +31,16 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private Body playerBody;
     private boolean facingRight =true;
 
+    private float movespeed = MOVESPEED;
+    private float jumpforce = JUMP_FORCE;
+
     private Logger logger;
 
     private Animation idleAnimation;
     private Animation runAnimation;
     private int ammo = 0;
+
+    CurrentDirection currentDirection = CurrentDirection.NONE;
 
     public PlayerCharacter(String atlas, Texture t, Vector2 pos) {
         super(atlas, t, pos);
@@ -66,38 +69,45 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
         this.setPosition(playerBody.getPosition().x-PLAYER_OFFSET_X,playerBody.getPosition().y-PLAYER_OFFSET_Y);
         if(!facingRight){flip(true,false);}
 
-        if (playerBody.getLinearVelocity().x != 0)
-        {
-            super.setAnimation(runAnimation);
-        }
-        else
-        {
-            super.setAnimation(idleAnimation);
+        Vector2 vel = playerBody.getLinearVelocity();
+        Vector2 pos = playerBody.getPosition();
+
+        switch(currentDirection){
+            case UP:
+                if (vel.y == 0) {
+                    playerBody.applyLinearImpulse(0, jumpforce, pos.x, pos.y, true);
+                }
+                break;
+            case LEFT:
+                facingRight = false;
+                playerBody.setLinearVelocity(-movespeed, vel.y);
+                break;
+            case RIGHT:
+                facingRight = true;
+                playerBody.setLinearVelocity(movespeed, vel.y);
+                break;
+            case NONE:
+                playerBody.setLinearVelocity(0, vel.y);
         }
     }
 
     public void move(CurrentDirection direction){
-        Vector2 vel = playerBody.getLinearVelocity();
-        Vector2 pos = playerBody.getPosition();
         switch(direction){
             case LEFT:
-                facingRight=false;
-                if (vel.x > -MAX_VELOCITY) {
-                playerBody.applyLinearImpulse(-FORCE_X, 0, pos.x, pos.y, true);
-                }
+                this.currentDirection = CurrentDirection.LEFT;
+                setAnimation(runAnimation);
                 break;
             case RIGHT:
-                facingRight=true;
-                if (vel.x < MAX_VELOCITY) {
-                    playerBody.applyLinearImpulse(FORCE_X, 0, pos.x, pos.y, true);
-                }
+                this.currentDirection = CurrentDirection.RIGHT;
+                setAnimation(runAnimation);
                 break;
             case UP:
-                if (pos.y< MAX_HEIGHT && vel.y < MAX_VELOCITY) {
-                    playerBody.applyLinearImpulse(0, FORCE_Y, pos.x, pos.y, true);
-                }
+                this.currentDirection = CurrentDirection.UP;
+                break;
+            case NONE:
+                this.currentDirection = CurrentDirection.NONE;
+                setAnimation(idleAnimation);
         }
-        animation.setPlayMode(playmode);
     }
 
     @Override

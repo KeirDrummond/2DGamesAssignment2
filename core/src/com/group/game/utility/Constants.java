@@ -31,12 +31,9 @@ public class Constants {
     public static final float DENSITY=.5f;
     public static final float FRICTION=.5f;
     public static final float RESTITUTION= 0f;
-    //impulse strength
-    public static final float FORCE_X=30f;
-    public static final float FORCE_Y=30f;
-    //Speed
-    public static final float MAX_VELOCITY = 1f;
-    public static final float MAX_HEIGHT = 18;
+    //Character movemenet
+    public static final float MOVESPEED=15f;
+    public static final float JUMP_FORCE=30f;
     //player body
     public static int PLAYER_WIDTH= 3;
     public static int PLAYER_HEIGHT=4;

@@ -8,11 +8,14 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -118,24 +121,48 @@ public class HUD implements Disposable {
 
     private void addButtonListeners(){
         //up
-        upBtn.addListener(new ChangeListener() {
+        upBtn.addListener(new InputListener()
+        {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
                 playerCharacter.move(CurrentDirection.UP);
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+            {
+                playerCharacter.move(CurrentDirection.NONE);
             }
         });
         //left
-        leftBtn.addListener(new ChangeListener() {
+        leftBtn.addListener(new InputListener()
+        {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
                 playerCharacter.move(CurrentDirection.LEFT);
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+            {
+                playerCharacter.move(CurrentDirection.NONE);
             }
         });
         //right
-        rightBtn.addListener(new ChangeListener() {
+        rightBtn.addListener(new InputListener()
+        {
             @Override
-            public void changed(ChangeEvent event, Actor actor) {
+            public boolean touchDown(InputEvent event, float x, float y, int pointer, int button)
+            {
                 playerCharacter.move(CurrentDirection.RIGHT);
+                return true;
+            }
+            @Override
+            public void touchUp(InputEvent event, float x, float y, int pointer, int button)
+            {
+                playerCharacter.move(CurrentDirection.NONE);
             }
         });
     }
