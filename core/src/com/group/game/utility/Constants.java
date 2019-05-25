@@ -32,7 +32,7 @@ public class Constants {
     public static final float FRICTION=20f;
     public static final float RESTITUTION= 0f;
     //impulse strength
-    public static final float MOVESPEED=150f;
+    public static final float MOVESPEED=50f;
     public static final float FORCE_Y=300f;
     //Speed
     public static final float MAX_VELOCITY = 15f;
