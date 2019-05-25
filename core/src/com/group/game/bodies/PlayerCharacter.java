@@ -14,8 +14,9 @@ import com.group.game.utility.CurrentDirection;
 import com.group.game.utility.IWorldObject;
 
 import static com.group.game.utility.Constants.DENSITY;
+import static com.group.game.utility.Constants.FORCE_Y;
 import static com.group.game.utility.Constants.FRICTION;
-import static com.group.game.utility.Constants.JUMP_FORCE;
+import static com.group.game.utility.Constants.MAX_VELOCITY;
 import static com.group.game.utility.Constants.MOVESPEED;
 import static com.group.game.utility.Constants.PLAYER_OFFSET_X;
 import static com.group.game.utility.Constants.PLAYER_OFFSET_Y;
@@ -32,7 +33,8 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private boolean facingRight =true;
 
     private float movespeed = MOVESPEED;
-    private float jumpforce = JUMP_FORCE;
+    private float MAXmovespeed = MAX_VELOCITY;
+    private float jumpforce = FORCE_Y;
 
     private Logger logger;
 
@@ -80,33 +82,38 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
                 break;
             case LEFT:
                 facingRight = false;
-                playerBody.setLinearVelocity(-movespeed, vel.y);
+                playerBody.applyLinearImpulse(-movespeed, 0, pos.x, pos.y, true);
                 break;
             case RIGHT:
                 facingRight = true;
-                playerBody.setLinearVelocity(movespeed, vel.y);
-                break;
-            case NONE:
-                playerBody.setLinearVelocity(0, vel.y);
+                playerBody.applyLinearImpulse(movespeed, 0, pos.x, pos.y, true);
         }
+
+        if (vel.x > MAXmovespeed)
+            playerBody.setLinearVelocity(MAXmovespeed, vel.y);
+        if (vel.x < -MAXmovespeed)
+            playerBody.setLinearVelocity(-MAXmovespeed, vel.y);
+
+        if (vel.x != 0)
+            setAnimation(runAnimation);
+        else
+            setAnimation(idleAnimation);
+
     }
 
     public void move(CurrentDirection direction){
         switch(direction){
             case LEFT:
                 this.currentDirection = CurrentDirection.LEFT;
-                setAnimation(runAnimation);
                 break;
             case RIGHT:
                 this.currentDirection = CurrentDirection.RIGHT;
-                setAnimation(runAnimation);
                 break;
             case UP:
                 this.currentDirection = CurrentDirection.UP;
                 break;
             case NONE:
                 this.currentDirection = CurrentDirection.NONE;
-                setAnimation(idleAnimation);
         }
     }
 

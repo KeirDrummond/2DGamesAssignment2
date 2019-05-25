@@ -28,12 +28,14 @@ public class Constants {
     public static final String BACKGROUND = "tileData/fullTrain_V3.1.tmx";
     public static final String PHYSICS_MATERIALS_PATH = "tileData/physicsData.json";
 
-    public static final float DENSITY=.5f;
-    public static final float FRICTION=.5f;
+    public static final float DENSITY=5f;
+    public static final float FRICTION=20f;
     public static final float RESTITUTION= 0f;
-    //Character movemenet
-    public static final float MOVESPEED=15f;
-    public static final float JUMP_FORCE=30f;
+    //impulse strength
+    public static final float MOVESPEED=150f;
+    public static final float FORCE_Y=300f;
+    //Speed
+    public static final float MAX_VELOCITY = 15f;
     //player body
     public static int PLAYER_WIDTH= 3;
     public static int PLAYER_HEIGHT=4;
