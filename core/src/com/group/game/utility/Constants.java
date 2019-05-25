@@ -43,7 +43,7 @@ public class Constants {
     public static float PLAYER_OFFSET_Y=2.15f;
     public static float PLAYER_OFFSET_X=1.5f;
     //player graphics
-    public static final String PLAYER_ATLAS_PATH = "atlas/smurf_assets.atlas";
+    public static final String PLAYER_ATLAS_PATH = "atlas/character.atlas";
     public static final Texture MEDIUM = new Texture(Gdx.files.internal("gfx/mediumSize.png"));
     public static final Texture SMALL = new Texture(Gdx.files.internal("gfx/smallSize.png"));
     public static final Texture TINY = new Texture(Gdx.files.internal("gfx/tinySize.png"));

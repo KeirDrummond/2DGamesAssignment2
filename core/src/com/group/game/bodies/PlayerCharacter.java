@@ -1,5 +1,6 @@
 package com.group.game.bodies;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
@@ -34,10 +35,15 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
 
     private Logger logger;
 
+    private Animation idleAnimation;
+    private Animation runAnimation;
     private int ammo = 0;
 
     public PlayerCharacter(String atlas, Texture t, Vector2 pos) {
         super(atlas, t, pos);
+        idleAnimation = super.newAnimation(atlas, "character_idle");
+        super.setAnimation(idleAnimation);
+        runAnimation = super.newAnimation(atlas, "character_run");
         buildBody();
         logger = new Logger("Player", Logger.DEBUG);
     }
@@ -59,6 +65,15 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
         super.update(stateTime);
         this.setPosition(playerBody.getPosition().x-PLAYER_OFFSET_X,playerBody.getPosition().y-PLAYER_OFFSET_Y);
         if(!facingRight){flip(true,false);}
+
+        if (playerBody.getLinearVelocity().x != 0)
+        {
+            super.setAnimation(runAnimation);
+        }
+        else
+        {
+            super.setAnimation(idleAnimation);
+        }
     }
 
     public void move(CurrentDirection direction){
@@ -67,27 +82,20 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
         switch(direction){
             case LEFT:
                 facingRight=false;
-                playmode = Animation.PlayMode.LOOP;
                 if (vel.x > -MAX_VELOCITY) {
                 playerBody.applyLinearImpulse(-FORCE_X, 0, pos.x, pos.y, true);
                 }
                 break;
             case RIGHT:
                 facingRight=true;
-                playmode = Animation.PlayMode.LOOP;
                 if (vel.x < MAX_VELOCITY) {
                     playerBody.applyLinearImpulse(FORCE_X, 0, pos.x, pos.y, true);
                 }
                 break;
             case UP:
-                playmode = Animation.PlayMode.NORMAL;
                 if (pos.y< MAX_HEIGHT && vel.y < MAX_VELOCITY) {
                     playerBody.applyLinearImpulse(0, FORCE_Y, pos.x, pos.y, true);
                 }
-                break;
-            case STOP:
-                if(vel.x > -8 & vel.x < 8)
-                    playmode = Animation.PlayMode.NORMAL;
         }
         animation.setPlayMode(playmode);
     }

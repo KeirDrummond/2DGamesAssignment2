@@ -29,7 +29,7 @@ public class HUD implements Disposable {
     Table tableData;
     Table tableControls;
     // Navigation widgets
-    private Button leftBtn,rightBtn,upBtn,downBtn;
+    private Button leftBtn,rightBtn,upBtn;
     private PlayerCharacter playerCharacter;
     private TBWGame game;
 
@@ -88,8 +88,6 @@ public class HUD implements Disposable {
     private void createNavButtons(){
         Texture actorUpBtn =
                 new Texture(Gdx.files.internal("buttons/up.png"));
-        Texture actorDownBtn =
-                new Texture(Gdx.files.internal("buttons/down.png"));
         Texture actorLeftBtn =
                 new Texture(Gdx.files.internal("buttons/left.png"));
         Texture actorRightBtn =
@@ -99,11 +97,6 @@ public class HUD implements Disposable {
         buttonStyleUp.up =
                 new TextureRegionDrawable(new TextureRegion(actorUpBtn));
         upBtn = new Button( buttonStyleUp );
-
-        Button.ButtonStyle buttonStyleDown = new Button.ButtonStyle();
-        buttonStyleDown.up =
-                new TextureRegionDrawable(new TextureRegion(actorDownBtn));
-        downBtn = new Button( buttonStyleDown );
 
         Button.ButtonStyle buttonStyleLeft = new Button.ButtonStyle();
         buttonStyleLeft.up =
@@ -116,9 +109,8 @@ public class HUD implements Disposable {
         rightBtn = new Button( buttonStyleRight );
 
         //add buttons
-        tableControls.add(upBtn).padLeft(50);
-        tableControls.add(downBtn).expandX();
-        tableControls.add(leftBtn).expandX().padLeft(150);
+        tableControls.add(leftBtn).expandX().padLeft(25);
+        tableControls.add(upBtn).expandX();
         tableControls.add(rightBtn).expandX().padRight(25);
         //add listeners to the buttons
         addButtonListeners();
@@ -130,13 +122,6 @@ public class HUD implements Disposable {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 playerCharacter.move(CurrentDirection.UP);
-            }
-        });
-        //down
-        downBtn.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-
             }
         });
         //left
