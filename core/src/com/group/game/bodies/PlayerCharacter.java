@@ -11,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.utils.Logger;
 import com.group.game.physics.WorldManager;
 import com.group.game.utility.CurrentDirection;
+import com.group.game.utility.GameData;
 import com.group.game.utility.IWorldObject;
 
 import static com.group.game.utility.Constants.DENSITY;
@@ -37,6 +38,7 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private float jumpforce = FORCE_Y;
 
     private Logger logger;
+    private GameData gameData;
 
     private Animation idleAnimation;
     private Animation runAnimation;
@@ -135,8 +137,17 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
 
     }
 
-    public void addAmmo(int theAmmo)
+    public void fireGun(){
+        if (ammo > 0)
+        {
+            ammo--;
+            gameData.getInstance().setAmmo(this.ammo);
+        }
+    }
+
+    public void addAmmo(int ammo)
     {
-        ammo += theAmmo;
+        this.ammo += ammo;
+        gameData.getInstance().setAmmo(this.ammo);
     }
 }
