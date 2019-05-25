@@ -1,3 +1,4 @@
+
 package com.group.game.utility;
 
 
@@ -53,6 +54,12 @@ public class Constants {
 
     public static final String REVOLVER_AMMO_PICKUP_PATH = "atlas/revolver_ammo.atlas";
     public static final String REVOLVER_AMMO_PICKUP_SOUND_PATH = "sounds/revolverpickup.wav";
+
+    public static final String SOUNDTRACK_PATH = "sounds/soundtrack.wav";
+    public static final String GUNSHOT_PATH = "sounds/gunshot.wav";
+    public static final String PICKUP_PATH = "sounds/pickup.wav";
+    public static final String HIT_PATH = "sounds/hit_hurt.wav";
+    public static final String JUMP_PATH = "sounds/jump.wav";
 
 
 }

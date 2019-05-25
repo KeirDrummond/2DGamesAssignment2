@@ -139,4 +139,8 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     {
         ammo += theAmmo;
     }
+    public void changeSpeed(float theSpeed)
+    {
+        movespeed = theSpeed;
+    }
 }

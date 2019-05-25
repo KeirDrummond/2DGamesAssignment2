@@ -2,6 +2,7 @@ package com.group.game.screens;
 
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
@@ -24,6 +25,7 @@ import static com.group.game.utility.Constants.START_POSITION;
 import static com.group.game.utility.Constants.UNITSCALE;
 import static com.group.game.utility.Constants.VIRTUAL_HEIGHT;
 import static com.group.game.utility.Constants.VIRTUAL_WIDTH;
+import static com.group.game.utility.Constants.SOUNDTRACK_PATH;
 
 
 /**
@@ -40,6 +42,7 @@ public class GameScreen extends ScreenAdapter {
     private HUD gameHUD;
     private CameraManager cameraManager;
     private float frameDelta = 0;
+    Sound sound;
 
     public GameScreen(TBWGame tbwGame){this.game = tbwGame;}
 
@@ -63,6 +66,10 @@ public class GameScreen extends ScreenAdapter {
         cameraManager.setTarget(smif);
         backgroundManager = new BackgroundManager(BACKGROUND_PATH,6,4, cameraManager);
         gameHUD = new HUD(game.batch,smif,game);
+
+        sound = Gdx.audio.newSound(Gdx.files.internal(SOUNDTRACK_PATH));
+
+        sound.play(1.0f);
     }
 
     @Override
