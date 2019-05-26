@@ -60,6 +60,7 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
     @Override
     public void intersected(PlayerCharacter thePlayer) {
+        isDisplayed = false;
         if (active) {
             playerCharacter = thePlayer;
             sound.play(1.0f);
