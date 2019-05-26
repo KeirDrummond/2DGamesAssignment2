@@ -65,7 +65,7 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
             playerCharacter = thePlayer;
             sound.play(1.0f);
             thePlayer.changeSpeed(MOONSHINE_SPEED);
-            timer = 5f;
+            timer = 1500f;
             active = false;
         }
     }
@@ -73,7 +73,7 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
     @Override
     public void update (float delta){
         if(timer>0){
-            timer=-delta;
+            timer-=delta;
             if(timer<=0){
                 playerCharacter.changeSpeed(MAX_VELOCITY);
             }
