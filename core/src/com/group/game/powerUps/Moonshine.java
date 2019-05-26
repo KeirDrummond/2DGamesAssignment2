@@ -11,6 +11,8 @@ import com.group.game.bodies.AnimatedSprite;
 import com.group.game.bodies.PlayerCharacter;
 
 import static com.group.game.utility.Constants.PICKUP_PATH;
+import static com.group.game.utility.Constants.MOVESPEED;
+import static com.group.game.utility.Constants.MOONSHINE_SPEED;
 
 public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
@@ -18,6 +20,11 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
     private Animation idleAnimation;
     private Animation pickupAnimation;
+
+    private float timer;
+    private boolean active = true;
+
+    private PlayerCharacter playerCharacter;
 
     private Rectangle rectangle;
     Sound sound;
@@ -52,8 +59,19 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
     @Override
     public void intersected(PlayerCharacter thePlayer) {
+        playerCharacter = thePlayer;
         isDisplayed = false;
         sound.play(1.0f);
-        thePlayer.changeSpeed(20.0f);
+        thePlayer.changeSpeed(MOONSHINE_SPEED);
+        if(active){timer = 5f; active = false;}
+    }
+
+    public void update (float delta){
+        if(timer>0){
+            timer=-delta;
+            if(timer<=0){
+                playerCharacter.changeSpeed(MOVESPEED);
+            }
+        }
     }
 }
