@@ -12,6 +12,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Logger;
 import com.group.game.bodies.PlayerCharacter;
 import com.group.game.physics.WorldManager;
+import com.group.game.powerUps.Moonshine;
 import com.group.game.powerUps.PowerUpSprite;
 import com.group.game.powerUps.RevolverAmmo;
 
@@ -19,6 +20,7 @@ import java.util.Iterator;
 
 //import static com.group.game.utility.Constants.MAX_TIME_TO_NEXT_BONUS;
 import static com.group.game.utility.Constants.MEDIUM;
+import static com.group.game.utility.Constants.MOONSHINE_PICKUP_PATH;
 import static com.group.game.utility.Constants.REVOLVER_AMMO_PICKUP_PATH;
 import static com.group.game.utility.Constants.SMALL;
 import static com.group.game.utility.Constants.TILE_SIZE;
@@ -74,7 +76,11 @@ public class BonusManager {
 
             if (powerName.equals("RevolverAmmo"))
             {
-                bonusCollection[i] = new RevolverAmmo(REVOLVER_AMMO_PICKUP_PATH, SMALL, pos);
+                bonusCollection[i] = new RevolverAmmo(REVOLVER_AMMO_PICKUP_PATH, MEDIUM, pos);
+            }
+            else if (powerName.equals("Moonshine"))
+            {
+                bonusCollection[i] = new Moonshine(MOONSHINE_PICKUP_PATH, MEDIUM, pos);
             }
             else
             {

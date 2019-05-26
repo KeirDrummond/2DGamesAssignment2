@@ -16,6 +16,9 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
     private boolean isDisplayed;
 
+    private Animation idleAnimation;
+    private Animation pickupAnimation;
+
     private Rectangle rectangle;
     Sound sound;
 
@@ -27,6 +30,10 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
         rectangle = this.getBoundingRectangle();
         sound = Gdx.audio.newSound(Gdx.files.internal(PICKUP_PATH));
+
+        idleAnimation = super.newAnimation(atlasString, "idleMoonshine");
+        super.setAnimation(idleAnimation);
+        pickupAnimation = super.newAnimation(atlasString, "smashMoonshine");
     }
 
     public boolean isDisplayed() {
