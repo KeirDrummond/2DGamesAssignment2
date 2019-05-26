@@ -10,6 +10,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.group.game.bodies.AnimatedSprite;
 import com.group.game.bodies.PlayerCharacter;
 
+import static com.group.game.utility.Constants.MAX_VELOCITY;
 import static com.group.game.utility.Constants.PICKUP_PATH;
 import static com.group.game.utility.Constants.MOVESPEED;
 import static com.group.game.utility.Constants.MOONSHINE_SPEED;
@@ -59,11 +60,13 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
     @Override
     public void intersected(PlayerCharacter thePlayer) {
-        playerCharacter = thePlayer;
-        isDisplayed = false;
-        sound.play(1.0f);
-        thePlayer.changeSpeed(MOONSHINE_SPEED);
-        if(active){timer = 5f; active = false;}
+        if (active) {
+            playerCharacter = thePlayer;
+            sound.play(1.0f);
+            thePlayer.changeSpeed(MOONSHINE_SPEED);
+            timer = 5f;
+            active = false;
+        }
     }
 
     @Override
@@ -71,7 +74,7 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
         if(timer>0){
             timer=-delta;
             if(timer<=0){
-                playerCharacter.changeSpeed(MOVESPEED);
+                playerCharacter.changeSpeed(MAX_VELOCITY);
             }
         }
         super.update(delta);
