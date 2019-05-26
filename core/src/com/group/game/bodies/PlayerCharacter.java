@@ -36,7 +36,7 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private Body playerBody;
     private boolean facingRight =true;
 
-    private float movespeed = MOVESPEED;
+    private float acceleration = MOVESPEED;
     private float MAXmovespeed = MAX_VELOCITY;
     private float jumpforce = FORCE_Y;
 
@@ -90,11 +90,11 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
                 break;
             case LEFT:
                 facingRight = false;
-                playerBody.applyLinearImpulse(-movespeed, 0, pos.x, pos.y, true);
+                playerBody.applyLinearImpulse(-acceleration, 0, pos.x, pos.y, true);
                 break;
             case RIGHT:
                 facingRight = true;
-                playerBody.applyLinearImpulse(movespeed, 0, pos.x, pos.y, true);
+                playerBody.applyLinearImpulse(acceleration, 0, pos.x, pos.y, true);
         }
 
         if (vel.x > MAXmovespeed)
@@ -149,6 +149,6 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     }
     public void changeSpeed(float theSpeed)
     {
-        movespeed = theSpeed;
+        MAXmovespeed = theSpeed;
     }
 }
