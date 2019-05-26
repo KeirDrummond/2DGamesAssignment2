@@ -16,6 +16,9 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
     private boolean isDisplayed;
 
+    private float timer;
+    private boolean active = true;
+
     private Rectangle rectangle;
     Sound sound;
 
@@ -48,5 +51,15 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
         isDisplayed = false;
         sound.play(1.0f);
         thePlayer.changeSpeed(20.0f);
+        if (active) {timer = 5f; active = false;}
+    }
+
+    public void update(float delta, PlayerCharacter thePlayer){
+        if (timer>0){
+            timer=-delta;
+            if (timer<=0){
+               thePlayer.changeSpeed(50.0f);
+            }
+        }
     }
 }
