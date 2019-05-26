@@ -15,6 +15,7 @@ import static com.group.game.utility.Constants.REVOLVER_AMMO_PICKUP_SOUND_PATH;
 public class RevolverAmmo extends AnimatedSprite implements PowerUpSprite {
 
     private boolean isDisplayed;
+    private boolean active = true;
 
     private Rectangle rectangle;
     Sound sound;
@@ -46,9 +47,12 @@ public class RevolverAmmo extends AnimatedSprite implements PowerUpSprite {
 
     @Override
     public void intersected(PlayerCharacter thePlayer) {
-        isDisplayed = false;
-        sound.play(1.0f);
-        thePlayer.addAmmo(10);
+        if (active) {
+            isDisplayed = false;
+            active = false;
+            sound.play(1.0f);
+            thePlayer.addAmmo(10);
+        }
     }
 
 }

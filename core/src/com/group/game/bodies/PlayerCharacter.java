@@ -48,7 +48,8 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private Animation runAnimation;
     private int ammo = 0;
 
-    Sound sound;
+    Sound jumpSound;
+    Sound gunSound;
 
     CurrentDirection currentDirection = CurrentDirection.NONE;
 
@@ -85,8 +86,8 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
         switch(currentDirection){
             case UP:
                 if (vel.y == 0) {
-                    sound = Gdx.audio.newSound(Gdx.files.internal(JUMP_PATH));
-                    sound.play(1.0f);
+                    jumpSound = Gdx.audio.newSound(Gdx.files.internal(JUMP_PATH));
+                    jumpSound.play(1.0f);
                     playerBody.applyLinearImpulse(0, jumpforce, pos.x, pos.y, true);
                 }
                 break;
@@ -148,6 +149,8 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     public void fireGun(){
         if (ammo > 0)
         {
+            gunSound = Gdx.audio.newSound(Gdx.files.internal(GUNSHOT_PATH));
+            gunSound.play(1.0f);
             ammo--;
             gameData.getInstance().setAmmo(this.ammo);
         }

@@ -8,6 +8,9 @@
   <image width="96" height="96" source="pointers/sprite_0.png"/>
  </tile>
  <tile id="1">
+  <properties>
+   <property name="Name" value="RevolverAmmo"/>
+  </properties>
   <image width="128" height="128" source="pointers/RevolverAmmo.png"/>
  </tile>
 </tileset>

@@ -105,11 +105,11 @@ public class BonusManager {
         if (bonusCollection != null)
             for(int i=0;i<bonusCollection.length;i++)
             {
-                if(bonusCollection[i] != null)
+                if(bonusCollection[i] != null) {
                     bonusCollection[i].update(frameDelta);
-                if(Intersector.overlaps(playerCharacter.getBoundingRectangle(), bonusCollection[i].GetRectangle()))
-                {
-                    bonusCollection[i].intersected(playerCharacter);
+                    if (Intersector.overlaps(playerCharacter.getBoundingRectangle(), bonusCollection[i].GetRectangle())) {
+                        bonusCollection[i].intersected(playerCharacter);
+                    }
                 }
             }
     }
