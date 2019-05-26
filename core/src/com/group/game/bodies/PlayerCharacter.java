@@ -1,6 +1,7 @@
 package com.group.game.bodies;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
@@ -21,6 +22,9 @@ import static com.group.game.utility.Constants.MOVESPEED;
 import static com.group.game.utility.Constants.PLAYER_OFFSET_X;
 import static com.group.game.utility.Constants.PLAYER_OFFSET_Y;
 import static com.group.game.utility.Constants.RESTITUTION;
+import static com.group.game.utility.Constants.JUMP_PATH;
+import static com.group.game.utility.Constants.HIT_PATH;
+import static com.group.game.utility.Constants.GUNSHOT_PATH;
 
 
 /**
@@ -41,6 +45,8 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private Animation idleAnimation;
     private Animation runAnimation;
     private int ammo = 0;
+
+    Sound sound;
 
     CurrentDirection currentDirection = CurrentDirection.NONE;
 
@@ -77,6 +83,8 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
         switch(currentDirection){
             case UP:
                 if (vel.y == 0) {
+                    sound = Gdx.audio.newSound(Gdx.files.internal(JUMP_PATH));
+                    sound.play(1.0f);
                     playerBody.applyLinearImpulse(0, jumpforce, pos.x, pos.y, true);
                 }
                 break;
