@@ -1,6 +1,7 @@
 package com.group.game.bodies;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.math.Vector2;
@@ -22,6 +23,9 @@ import static com.group.game.utility.Constants.MOVESPEED;
 import static com.group.game.utility.Constants.PLAYER_OFFSET_X;
 import static com.group.game.utility.Constants.PLAYER_OFFSET_Y;
 import static com.group.game.utility.Constants.RESTITUTION;
+import static com.group.game.utility.Constants.JUMP_PATH;
+import static com.group.game.utility.Constants.HIT_PATH;
+import static com.group.game.utility.Constants.GUNSHOT_PATH;
 
 
 /**
@@ -33,7 +37,7 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private Body playerBody;
     private boolean facingRight =true;
 
-    private float movespeed = MOVESPEED;
+    private float acceleration = MOVESPEED;
     private float MAXmovespeed = MAX_VELOCITY;
     private float jumpforce = FORCE_Y;
 
@@ -43,6 +47,8 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private Animation idleAnimation;
     private Animation runAnimation;
     private int ammo = 0;
+
+    Sound sound;
 
     CurrentDirection currentDirection = CurrentDirection.NONE;
 
@@ -79,16 +85,18 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
         switch(currentDirection){
             case UP:
                 if (vel.y == 0) {
+                    sound = Gdx.audio.newSound(Gdx.files.internal(JUMP_PATH));
+                    sound.play(1.0f);
                     playerBody.applyLinearImpulse(0, jumpforce, pos.x, pos.y, true);
                 }
                 break;
             case LEFT:
                 facingRight = false;
-                playerBody.applyLinearImpulse(-movespeed, 0, pos.x, pos.y, true);
+                playerBody.applyLinearImpulse(-acceleration, 0, pos.x, pos.y, true);
                 break;
             case RIGHT:
                 facingRight = true;
-                playerBody.applyLinearImpulse(movespeed, 0, pos.x, pos.y, true);
+                playerBody.applyLinearImpulse(acceleration, 0, pos.x, pos.y, true);
         }
 
         if (vel.x > MAXmovespeed)
@@ -149,5 +157,9 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     {
         this.ammo += ammo;
         gameData.getInstance().setAmmo(this.ammo);
+    }
+    public void changeSpeed(float theSpeed)
+    {
+        MAXmovespeed = theSpeed;
     }
 }
