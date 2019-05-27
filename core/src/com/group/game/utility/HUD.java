@@ -196,7 +196,7 @@ public class HUD implements Disposable {
                 timeUp = true;
                 GameData.getInstance().setAmmo(ammo);
                 GameData.getInstance().setTime(worldTimer);
-                game.setScreen(new EndScreen());
+                game.setScreen(new EndScreen(false));
             }
             countdownLabel.setText(String.format("%03d", worldTimer));
             timeCount = 0;
@@ -206,6 +206,7 @@ public class HUD implements Disposable {
     public static void setAmmo(int value) {
         ammo = value;
         ammoLabel.setText(String.format("%03d", ammo));
+        GameData.getInstance().setAmmo(ammo);
     }
 
     @Override

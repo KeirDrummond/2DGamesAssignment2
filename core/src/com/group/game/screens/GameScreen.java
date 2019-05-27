@@ -83,6 +83,11 @@ public class GameScreen extends ScreenAdapter {
         clearScreen();
         draw();
         WorldManager.getInstance().doPhysicsStep(delta);
+
+        if (smif.getY() < 0)
+            game.setScreen(new EndScreen(false));
+        else if (smif.getX() > 135)
+            game.setScreen(new EndScreen(true));
     }
 
     private void draw() {
