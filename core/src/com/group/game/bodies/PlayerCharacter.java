@@ -13,6 +13,7 @@ import com.badlogic.gdx.utils.Logger;
 import com.group.game.physics.WorldManager;
 import com.group.game.utility.CurrentDirection;
 import com.group.game.utility.GameData;
+import com.group.game.utility.HUD;
 import com.group.game.utility.IWorldObject;
 
 import static com.group.game.utility.Constants.DENSITY;
@@ -42,7 +43,7 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private float jumpforce = FORCE_Y;
 
     private Logger logger;
-    private GameData gameData;
+    private HUD hud;
 
     private Animation idleAnimation;
     private Animation runAnimation;
@@ -152,17 +153,20 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
             gunSound = Gdx.audio.newSound(Gdx.files.internal(GUNSHOT_PATH));
             gunSound.play(1.0f);
             ammo--;
-            gameData.getInstance().setAmmo(this.ammo);
+            hud.setAmmo(ammo);
         }
     }
 
     public void addAmmo(int ammo)
     {
         this.ammo += ammo;
-        gameData.getInstance().setAmmo(this.ammo);
+        hud.setAmmo(ammo);
     }
-    public void changeSpeed(float theSpeed)
-    {
-        MAXmovespeed = theSpeed;
-    }
+
+    public int getAmmo() {return ammo;}
+
+    public void changeSpeed(float theSpeed) {MAXmovespeed = theSpeed;}
+
+    public void setHUDRef(HUD hud) {this.hud = hud;}
+
 }
