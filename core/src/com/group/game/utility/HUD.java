@@ -55,6 +55,7 @@ public class HUD implements Disposable {
         worldTimer = Constants.LEVEL_TIME;
         timeCount = 0;
         ammo = 0;
+        playerCharacter.setHUDRef(this);
         //new camera used to setup the HUD viewport seperate from the main Game Camera
         //define stage using that viewport and games spritebatch
         viewport = new FitViewport(Constants.VIRTUAL_WIDTH,
@@ -202,9 +203,9 @@ public class HUD implements Disposable {
         }
     }
 
-    public static void addAmmo(int value) {
-        ammo += value;
-        ammoLabel.setText(String.format("%06d", ammo));
+    public static void setAmmo(int value) {
+        ammo = value;
+        ammoLabel.setText(String.format("%03d", ammo));
     }
 
     @Override
