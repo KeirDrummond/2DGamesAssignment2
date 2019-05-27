@@ -25,12 +25,15 @@ public class EndScreen extends ScreenAdapter {
     private Label countdownLabel, headerLabel, linkLabel;
     private static Label scoreLabel;
 
-    public EndScreen(){
+    public EndScreen(boolean win){
         stage = new Stage(new FitViewport(VIRTUAL_WIDTH/3, VIRTUAL_HEIGHT/3));
         Gdx.input.setInputProcessor(stage);
         tableData = new Table();
         tableData.setFillParent(true);
-        createScoreAndTimer();
+        if (win)
+            createScoreAndTimer("LEVEL WON");
+        else
+            createScoreAndTimer("LEVEL LOST");
         stage.addActor(tableData);
     }
 
@@ -47,9 +50,9 @@ public class EndScreen extends ScreenAdapter {
         stage.draw();
     }
 
-    private void createScoreAndTimer(){
+    private void createScoreAndTimer(String text){
         //define labels using the String, and a Label style consisting of a font and color
-        headerLabel = new Label("LEVEL ONE SCORE", new Label.LabelStyle(new BitmapFont(), Color.LIME));
+        headerLabel = new Label(text, new Label.LabelStyle(new BitmapFont(), Color.LIME));
         scoreLabel = new Label(String.format("%03d", GameData.getInstance().getAmmo()), new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
         linkLabel = new Label("AMMO", new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
         //add labels to table
