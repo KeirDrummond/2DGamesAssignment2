@@ -87,7 +87,12 @@ public class GameScreen extends ScreenAdapter {
         WorldManager.getInstance().doPhysicsStep(delta);
 
         if (smif.getY() < 0)
-        {GameData.getInstance().setTime(0); game.setScreen(new EndScreen(false));}
+        {
+            Sound hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/hit_hurt.wav"));
+            hitSound.play();
+            GameData.getInstance().setTime(0);
+            game.setScreen(new EndScreen(false));
+        }
         else if (smif.getX() > 135)
         {game.setScreen(new EndScreen(true));}
     }
