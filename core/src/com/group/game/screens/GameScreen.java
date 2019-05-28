@@ -61,11 +61,12 @@ public class GameScreen extends ScreenAdapter {
         if(!WorldManager.isInitialised()){WorldManager.initialise(game,tiledMap);}
         //player
         smif = new PlayerCharacter(PLAYER_ATLAS_PATH,SMALL,START_POSITION);
-        bonusManager = new BonusManager(smif);
+
         cameraManager = new CameraManager(game.camera,tiledMap);
         cameraManager.setTarget(smif);
         backgroundManager = new BackgroundManager(BACKGROUND_PATH,6,4, cameraManager);
         gameHUD = new HUD(game.batch,smif,game);
+        bonusManager = new BonusManager(smif, gameHUD);
 
         sound = Gdx.audio.newSound(Gdx.files.internal(SOUNDTRACK_PATH));
 
@@ -77,7 +78,7 @@ public class GameScreen extends ScreenAdapter {
         frameDelta += delta;
         backgroundManager.update(delta);
         smif.update(frameDelta);
-        bonusManager.update(frameDelta);
+        bonusManager.update(delta);
         gameHUD.update(delta);
         game.batch.setProjectionMatrix(game.camera.combined);
         clearScreen();

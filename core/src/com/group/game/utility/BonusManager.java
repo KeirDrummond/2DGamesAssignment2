@@ -30,19 +30,13 @@ import static com.group.game.utility.Constants.TILE_SIZE;
 */
 
 public class BonusManager {
-    PowerUpSprite[] bonusCollection;
-    PlayerCharacter playerCharacter;
-    /* UNUSED
-    private int bonusSpriteToDisplay;
-    private float timeCount;
-    private float timeToNextBonus = MAX_TIME_TO_NEXT_BONUS;
+    private PowerUpSprite[] bonusCollection;
+    private PlayerCharacter playerCharacter;
+    private HUD hud;
 
-    public static boolean handlingCollision = false;
-    private Vector2 previousBonusPosition;
-    */
-
-    public BonusManager(PlayerCharacter playerCharacter){
+    public BonusManager(PlayerCharacter playerCharacter, HUD hud){
         this.playerCharacter = playerCharacter;
+        this.hud = hud;
         GetPowerUps(WorldManager.getInstance().getMap(), "PowerUps");
     }
 
@@ -76,11 +70,11 @@ public class BonusManager {
 
             if (powerName.equals("RevolverAmmo"))
             {
-                bonusCollection[i] = new RevolverAmmo(REVOLVER_AMMO_PICKUP_PATH, MEDIUM, pos);
+                bonusCollection[i] = new RevolverAmmo(REVOLVER_AMMO_PICKUP_PATH, MEDIUM, pos, hud);
             }
             else if (powerName.equals("Moonshine"))
             {
-                bonusCollection[i] = new Moonshine(MOONSHINE_PICKUP_PATH, MEDIUM, pos);
+                bonusCollection[i] = new Moonshine(MOONSHINE_PICKUP_PATH, MEDIUM, pos, hud);
             }
             else
             {

@@ -5,6 +5,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -22,8 +23,8 @@ public class EndScreen extends ScreenAdapter {
     private Stage stage;
     Table tableData;
     //Scene2D Widgets
-    private Label countdownLabel, headerLabel, linkLabel;
-    private static Label scoreLabel;
+    private Label countdownLabel, headerLabel, linkLabel, linkLabel2;
+    private static Label scoreLabel, ammoLabel;
 
     public EndScreen(boolean win){
         stage = new Stage(new FitViewport(VIRTUAL_WIDTH/3, VIRTUAL_HEIGHT/3));
@@ -52,14 +53,20 @@ public class EndScreen extends ScreenAdapter {
 
     private void createScoreAndTimer(String text){
         //define labels using the String, and a Label style consisting of a font and color
+        int score = GameData.getInstance().getScore() + (GameData.getInstance().getAmmo() * 5) + MathUtils.floor(GameData.getInstance().getTime());
         headerLabel = new Label(text, new Label.LabelStyle(new BitmapFont(), Color.LIME));
-        scoreLabel = new Label(String.format("%03d", GameData.getInstance().getAmmo()), new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
-        linkLabel = new Label("AMMO", new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
+        ammoLabel = new Label(String.format("%03d", GameData.getInstance().getAmmo()), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+        linkLabel = new Label("AMMO", new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+        scoreLabel = new Label(String.format("%03d", score), new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
+        linkLabel2 = new Label("SCORE", new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
         //add labels to table
         tableData.add(headerLabel).padLeft(150);
         tableData.row();
         tableData.add(linkLabel).padLeft(60);
-        tableData.add(scoreLabel).expandX().padRight(160);
+        tableData.add(ammoLabel).expandX();
+        tableData.row();
+        tableData.add(linkLabel2).padLeft(60);
+        tableData.add(scoreLabel).expandX();
 
     }
 

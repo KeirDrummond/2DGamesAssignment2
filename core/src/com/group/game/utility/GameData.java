@@ -6,6 +6,7 @@ package com.group.game.utility;
 
 public class GameData {
     private float time;
+    private int score;
     private int ammo;
     private String playerName;
     private static GameData INSTANCE;
@@ -34,6 +35,10 @@ public class GameData {
         this.time=time;
     }
 
+    public int getScore() {return score;}
+
+    public void setScore(int score) { this.score = score;}
+
     public int getAmmo() {
         return ammo;
     }
@@ -44,6 +49,7 @@ public class GameData {
 
     public void resetGameData(){
         time=0;
+        score=0;
         ammo=0;
         playerName="";
     }

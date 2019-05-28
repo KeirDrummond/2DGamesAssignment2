@@ -9,6 +9,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.group.game.bodies.AnimatedSprite;
 import com.group.game.bodies.PlayerCharacter;
+import com.group.game.utility.HUD;
 
 import static com.group.game.utility.Constants.MAX_VELOCITY;
 import static com.group.game.utility.Constants.PICKUP_PATH;
@@ -27,10 +28,11 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
     private PlayerCharacter playerCharacter;
 
+    private HUD hud;
     private Rectangle rectangle;
     Sound sound;
 
-    public Moonshine(String atlasString, Texture t, Vector2 pos) {
+    public Moonshine(String atlasString, Texture t, Vector2 pos, HUD hud) {
         super(atlasString, t, pos);
         isDisplayed = true;
         playmode = Animation.PlayMode.LOOP;
@@ -60,12 +62,13 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
     @Override
     public void intersected(PlayerCharacter thePlayer) {
-        isDisplayed = false;
         if (active) {
+            isDisplayed = false;
             playerCharacter = thePlayer;
             sound.play(1.0f);
             thePlayer.changeSpeed(MOONSHINE_SPEED);
-            timer = 1500f;
+            timer = 5f;
+            hud.setScore(-10);
             active = false;
         }
     }

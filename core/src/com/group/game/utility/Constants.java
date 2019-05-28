@@ -57,7 +57,7 @@ public class Constants {
 
     public static final String MOONSHINE_PICKUP_PATH = "atlas/moonshine.atlas";
 
-    public static final float MOONSHINE_SPEED = 10.0f;
+    public static final float MOONSHINE_SPEED = 5.0f;
 
     //Sound paths
     public static final String SOUNDTRACK_PATH = "sounds/soundtrack.wav";

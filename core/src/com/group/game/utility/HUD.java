@@ -41,12 +41,12 @@ public class HUD implements Disposable {
     //ammo && time tracking variables
     private Integer worldTimer;
     private float timeCount;
-    private static Integer ammo;
+    private static Integer ammo, score;
     private boolean timeUp;
 
     //Scene2D Widgets
-    private Label countdownLabel, timeLabel, linkLabel;
-    private static Label ammoLabel;
+    private Label countdownLabel, timeLabel, linkLabel, linkLabel2;
+    private static Label ammoLabel, scoreLabel;
 
     public HUD(SpriteBatch sb, PlayerCharacter playerCharacter, TBWGame tbwGame) {
         this.playerCharacter = playerCharacter;
@@ -55,6 +55,7 @@ public class HUD implements Disposable {
         worldTimer = Constants.LEVEL_TIME;
         timeCount = 0;
         ammo = 0;
+        score = 0;
         playerCharacter.setHUDRef(this);
         //new camera used to setup the HUD viewport seperate from the main Game Camera
         //define stage using that viewport and games spritebatch
@@ -80,13 +81,19 @@ public class HUD implements Disposable {
                 new Label.LabelStyle(new BitmapFont(), Color.RED));
         ammoLabel = new Label(String.format("%03d", ammo),
                 new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+        scoreLabel = new Label(String.format("%03d", score),
+                new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
         timeLabel = new Label("COUNTDOWN",
                 new Label.LabelStyle(new BitmapFont(), Color.RED));
         linkLabel = new Label("AMMO",
                 new Label.LabelStyle(new BitmapFont(), Color.BLUE));
+        linkLabel2 = new Label("SCORE",
+                new Label.LabelStyle(new BitmapFont(), Color.YELLOW));
         //labels added to table using padding and expandX
         tableData.add(linkLabel).padBottom(5).padLeft(120);
         tableData.add(ammoLabel).expandX().padBottom(5);
+        tableData.add(linkLabel2).padBottom(5);
+        tableData.add(scoreLabel).expandX().padBottom(5);
         tableData.add(timeLabel).padBottom(5).padRight(20);
         tableData.add(countdownLabel).expandX().padBottom(5);
     }
@@ -194,13 +201,19 @@ public class HUD implements Disposable {
                 worldTimer--;
             } else {
                 timeUp = true;
-                GameData.getInstance().setAmmo(ammo);
-                GameData.getInstance().setTime(worldTimer);
                 game.setScreen(new EndScreen(false));
             }
             countdownLabel.setText(String.format("%03d", worldTimer));
+            GameData.getInstance().setTime(worldTimer);
             timeCount = 0;
         }
+    }
+
+    public static void setScore(int value) {
+        score += value;
+        score = Math.max(score, 0);
+        scoreLabel.setText(String.format("%03d", score));
+        GameData.getInstance().setScore(score);
     }
 
     public static void setAmmo(int value) {
