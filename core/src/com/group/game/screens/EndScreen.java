@@ -32,9 +32,9 @@ public class EndScreen extends ScreenAdapter {
         tableData = new Table();
         tableData.setFillParent(true);
         if (win)
-            createScoreAndTimer("LEVEL WON");
+            createScoreAndTimer("LEVEL WON", 200);
         else
-            createScoreAndTimer("LEVEL LOST");
+            createScoreAndTimer("LEVEL LOST", 0);
         stage.addActor(tableData);
     }
 
@@ -51,9 +51,9 @@ public class EndScreen extends ScreenAdapter {
         stage.draw();
     }
 
-    private void createScoreAndTimer(String text){
+    private void createScoreAndTimer(String text, int bonus){
         //define labels using the String, and a Label style consisting of a font and color
-        int score = GameData.getInstance().getScore() + (GameData.getInstance().getAmmo() * 5) + MathUtils.floor(GameData.getInstance().getTime());
+        int score = GameData.getInstance().getScore() + (GameData.getInstance().getAmmo() * 5) + MathUtils.floor(GameData.getInstance().getTime()) + bonus;
         headerLabel = new Label(text, new Label.LabelStyle(new BitmapFont(), Color.LIME));
         ammoLabel = new Label(String.format("%03d", GameData.getInstance().getAmmo()), new Label.LabelStyle(new BitmapFont(), Color.BLUE));
         linkLabel = new Label("AMMO", new Label.LabelStyle(new BitmapFont(), Color.BLUE));

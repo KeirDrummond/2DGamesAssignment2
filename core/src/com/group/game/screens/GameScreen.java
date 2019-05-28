@@ -16,6 +16,7 @@ import com.group.game.utility.BackgroundManager;
 import com.group.game.utility.BonusManager;
 import com.group.game.utility.CameraManager;
 import com.group.game.utility.Constants;
+import com.group.game.utility.GameData;
 import com.group.game.utility.HUD;
 
 import static com.group.game.utility.Constants.BACKGROUND_PATH;
@@ -86,9 +87,9 @@ public class GameScreen extends ScreenAdapter {
         WorldManager.getInstance().doPhysicsStep(delta);
 
         if (smif.getY() < 0)
-            game.setScreen(new EndScreen(false));
+        {GameData.getInstance().setTime(0); game.setScreen(new EndScreen(false));}
         else if (smif.getX() > 135)
-            game.setScreen(new EndScreen(true));
+        {game.setScreen(new EndScreen(true));}
     }
 
     private void draw() {
