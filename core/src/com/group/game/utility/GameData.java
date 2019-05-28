@@ -35,6 +35,7 @@ public class GameData {
         this.time=time;
     }
 
+    //Score and ammo data.
     public int getScore() {return score;}
 
     public void setScore(int score) { this.score = score;}

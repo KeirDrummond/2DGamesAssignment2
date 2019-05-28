@@ -22,6 +22,7 @@ public class RevolverAmmo extends AnimatedSprite implements PowerUpSprite {
     private Rectangle rectangle;
     Sound sound;
 
+    //Constructor to set the default animation and trigger sound.
     public RevolverAmmo(String atlasString, Texture t, Vector2 pos, HUD hud) {
         super(atlasString, t, pos);
         isDisplayed = true;
@@ -47,6 +48,12 @@ public class RevolverAmmo extends AnimatedSprite implements PowerUpSprite {
         super.draw(batch);
     }
 
+    @Override
+    public void update(float delta, float frameDelta) {
+        super.update(frameDelta);
+    }
+
+    //On overlap, the ammo is incremented by 10 and a pickup sound plays.
     @Override
     public void intersected(PlayerCharacter thePlayer) {
         if (active) {

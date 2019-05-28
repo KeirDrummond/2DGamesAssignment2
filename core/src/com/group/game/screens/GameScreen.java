@@ -65,7 +65,7 @@ public class GameScreen extends ScreenAdapter {
 
         cameraManager = new CameraManager(game.camera,tiledMap);
         cameraManager.setTarget(smif);
-        backgroundManager = new BackgroundManager(BACKGROUND_PATH,6,4, cameraManager);
+        backgroundManager = new BackgroundManager(BACKGROUND_PATH,6,4);
         gameHUD = new HUD(game.batch,smif,game);
         bonusManager = new BonusManager(smif, gameHUD);
 
@@ -79,13 +79,14 @@ public class GameScreen extends ScreenAdapter {
         frameDelta += delta;
         backgroundManager.update(delta);
         smif.update(frameDelta);
-        bonusManager.update(delta);
+        bonusManager.update(delta, frameDelta);
         gameHUD.update(delta);
         game.batch.setProjectionMatrix(game.camera.combined);
         clearScreen();
         draw();
         WorldManager.getInstance().doPhysicsStep(delta);
 
+        //If the player falls below the map, they lose. If they get far enough i.e. the front of the train, they win.
         if (smif.getY() < 0)
         {
             Sound hitSound = Gdx.audio.newSound(Gdx.files.internal("sounds/hit_hurt.wav"));

@@ -40,6 +40,7 @@ public class BonusManager {
         GetPowerUps(WorldManager.getInstance().getMap(), "PowerUps");
     }
 
+    //Gets the pickup objects from the Tiled Map pointers to get the location to create each pickup.
     public void GetPowerUps(Map map, String layerName)
     {
         MapLayer layer = map.getLayers().get(layerName);
@@ -59,6 +60,7 @@ public class BonusManager {
             MapObject object = objectIt.next();
             String powerName = "null";
 
+            //Checks the tag for the current pickup stored on the tile properties.
             if (((TiledMapTileMapObject) object).getTile().getProperties().containsKey("Name")) {
                 powerName = ((TiledMapTileMapObject) object).getTile().getProperties().get("Name").toString();
             }
@@ -68,14 +70,17 @@ public class BonusManager {
             float units = TILE_SIZE;
             Vector2 pos = new Vector2(x / units, y / units);
 
+            //If the tag is RevolverAmmo, creates one.
             if (powerName.equals("RevolverAmmo"))
             {
                 bonusCollection[i] = new RevolverAmmo(REVOLVER_AMMO_PICKUP_PATH, MEDIUM, pos, hud);
             }
+            //If the tag is Moonshine, creates one.
             else if (powerName.equals("Moonshine"))
             {
                 bonusCollection[i] = new Moonshine(MOONSHINE_PICKUP_PATH, MEDIUM, pos, hud);
             }
+            //If the tag is not recognised, do nothing.
             else
             {
                 bonusCollection[i] = null;
@@ -95,12 +100,13 @@ public class BonusManager {
             }
     }
 
-    public void update(float frameDelta) {
+    public void update(float delta, float frameDelta) {
         if (bonusCollection != null)
             for(int i=0;i<bonusCollection.length;i++)
             {
                 if(bonusCollection[i] != null) {
-                    bonusCollection[i].update(frameDelta);
+                    bonusCollection[i].update(delta, frameDelta);
+                    //If the player character overlaps the object, execute the code in the pickup class.
                     if (Intersector.overlaps(playerCharacter.getBoundingRectangle(), bonusCollection[i].GetRectangle())) {
                         bonusCollection[i].intersected(playerCharacter);
                     }

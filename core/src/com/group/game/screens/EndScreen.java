@@ -17,6 +17,9 @@ import static com.group.game.utility.Constants.VIRTUAL_WIDTH;
 
 /**
  * Created by gerard on 23/04/2017.
+ *
+ * Last updated by Keir Drummond on 28/05/2019
+ *
  */
 
 public class EndScreen extends ScreenAdapter {
@@ -31,10 +34,13 @@ public class EndScreen extends ScreenAdapter {
         Gdx.input.setInputProcessor(stage);
         tableData = new Table();
         tableData.setFillParent(true);
+
+        //Different result text based on if the player cleared the level.
         if (win)
             createScoreAndTimer("LEVEL WON", 200);
         else
             createScoreAndTimer("LEVEL LOST", 0);
+
         stage.addActor(tableData);
     }
 

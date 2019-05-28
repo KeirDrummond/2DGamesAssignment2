@@ -31,7 +31,9 @@ import static com.group.game.utility.Constants.GUNSHOT_PATH;
 
 /**
  * Created by gja10 on 13/02/2017.
- * Updated 02/03/18
+ *
+ * Last updated by Keir Drummond on 28/05/2019.
+ *
  */
 
 public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
@@ -45,15 +47,20 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
     private Logger logger;
     private HUD hud;
 
+    //Character animations.
     private Animation idleAnimation;
     private Animation runAnimation;
+
+    //Ammo
     private int ammo = 0;
 
+    //Sounds
     Sound jumpSound;
     Sound gunSound;
 
     CurrentDirection currentDirection = CurrentDirection.NONE;
 
+    //Player constructor
     public PlayerCharacter(String atlas, Texture t, Vector2 pos) {
         super(atlas, t, pos);
         idleAnimation = super.newAnimation(atlas, "character_idle");
@@ -84,6 +91,7 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
         Vector2 vel = playerBody.getLinearVelocity();
         Vector2 pos = playerBody.getPosition();
 
+        //Get the last inputted action and executes it.
         switch(currentDirection){
             case UP:
                 if (vel.y == 0) {
@@ -101,11 +109,13 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
                 playerBody.applyLinearImpulse(acceleration, 0, pos.x, pos.y, true);
         }
 
+        //Caps the velocity.
         if (vel.x > MAXmovespeed)
             playerBody.setLinearVelocity(MAXmovespeed, vel.y);
         if (vel.x < -MAXmovespeed)
             playerBody.setLinearVelocity(-MAXmovespeed, vel.y);
 
+        //If moving horizontally, do the run animation. Otherwise, the idle animation.
         if (vel.x != 0)
             setAnimation(runAnimation);
         else
@@ -113,6 +123,7 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
 
     }
 
+    //The direction inputs are recorded here. It is then executed in the update method.
     public void move(CurrentDirection direction){
         switch(direction){
             case LEFT:
@@ -147,6 +158,7 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
 
     }
 
+    //Fires the gun (Plays gunshot sound and decrements the ammo count by 1.)
     public void fireGun(){
         if (ammo > 0)
         {
@@ -157,16 +169,20 @@ public class PlayerCharacter extends AnimatedSprite implements IWorldObject {
         }
     }
 
+    //Adds ammo to the player ammo count.
     public void addAmmo(int ammo)
     {
         this.ammo += ammo;
         hud.setAmmo(ammo);
     }
 
+    //Receives ammo count.
     public int getAmmo() {return ammo;}
 
+    //Used for pickups that alter movement speed.
     public void changeSpeed(float theSpeed) {MAXmovespeed = theSpeed;}
 
+    //Necessary for updating the ammo count on screen.
     public void setHUDRef(HUD hud) {this.hud = hud;}
 
 }

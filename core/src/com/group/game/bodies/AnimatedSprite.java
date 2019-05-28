@@ -38,6 +38,7 @@ public abstract class AnimatedSprite extends Sprite {
         this.setRegion((TextureRegion) animation.getKeyFrame(animationTime));
     }
 
+    //Creates default animation using entire atlas file.
     private void initAtlas(String atlasString){
         atlas = new TextureAtlas(Gdx.files.internal(atlasString));
         //load animations
@@ -47,6 +48,7 @@ public abstract class AnimatedSprite extends Sprite {
         animation = new Animation(FRAME_DURATION,regions, Animation.PlayMode.LOOP);
     }
 
+    //New method added for animated sprites with multiple animations.
     public Animation newAnimation(String atlasString, String tag){
         atlas = new TextureAtlas(Gdx.files.internal(atlasString));
         Animation theAnimation;
@@ -65,6 +67,7 @@ public abstract class AnimatedSprite extends Sprite {
         }
     }
 
+    //New method added for changing animations on one object.
     public void setAnimation(Animation theAnimation){this.animation = theAnimation;}
 
 }

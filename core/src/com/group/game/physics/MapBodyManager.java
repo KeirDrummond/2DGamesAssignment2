@@ -97,7 +97,7 @@ public class MapBodyManager {
         while(objectIt.hasNext()) {
             MapObject object = objectIt.next();
 
-            //if (object instanceof TextureMapObject){continue;}
+            if (object instanceof TextureMapObject){continue;}
 
             Shape shape;
             BodyDef bodyDef = new BodyDef();
@@ -116,9 +116,6 @@ public class MapBodyManager {
             }
             else if (object instanceof CircleMapObject) {
                 shape = getCircle((CircleMapObject)object);
-            }
-            else if (object instanceof TiledMapTileMapObject) {
-                shape = getTextureRegion((TiledMapTileMapObject)object);
             }
             else {
                 logger.error("non suported shape " + object);
@@ -204,19 +201,4 @@ public class MapBodyManager {
         return chain;
     }
 
-    private Shape getTextureRegion(TiledMapTileMapObject tileObject) {
-        //text
-        TextureRegion textureRegion;
-        textureRegion = tileObject.getTextureRegion();
-        PolygonShape polygon = new PolygonShape();
-        Vector2 size = new Vector2((tileObject.getX() + textureRegion.getRegionWidth() * 0.5f) / units,
-                (tileObject.getY() + textureRegion.getRegionHeight() * 0.5f ) / units);
-
-        polygon.setAsBox((textureRegion.getRegionWidth() * 0.5f)/units,
-                (textureRegion.getRegionHeight() * 0.5f)/units,
-                new Vector2(size.x,size.y),
-                0.0f);
-
-        return polygon;
-    }
 }

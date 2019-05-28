@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.group.game.bodies.PlayerCharacter;
 
+//Created interface to allow multiple pickups to be created using the same code.
 public interface PowerUpSprite {
 
     boolean isDisplayed();
@@ -13,7 +14,7 @@ public interface PowerUpSprite {
 
     void draw(SpriteBatch batch);
 
-    void update(float frameDelta);
+    void update(float delta, float frameDelta);
 
     void intersected(PlayerCharacter thePlayer);
 }

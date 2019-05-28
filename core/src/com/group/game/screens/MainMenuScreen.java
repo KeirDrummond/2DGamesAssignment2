@@ -32,7 +32,7 @@ public class MainMenuScreen extends ScreenAdapter {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         game.camera.update();
         game.batch.begin();
-        game.font.draw(game.batch, "Assignment 2 Example", 100, 150);
+        game.font.draw(game.batch, "Assignment 2", 100, 150);
         game.font.draw(game.batch, "Touch screen to start", 100, 100);
         game.batch.end();
 

@@ -147,6 +147,11 @@ public class HUD implements Disposable {
                 return true;
             }
         });
+
+        /* Each button detects when it is pushed down on the button, and when the input comes back up again.
+        *  This means that the game understand when the button is held down, and when it is not.
+        */
+
         //up
         upBtn.addListener(new InputListener()
         {

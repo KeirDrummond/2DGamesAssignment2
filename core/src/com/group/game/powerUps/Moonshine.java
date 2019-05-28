@@ -74,13 +74,13 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
     }
 
     @Override
-    public void update (float delta){
+    public void update (float delta, float frameDelta){
         if(timer>0){
             timer-=delta;
             if(timer<=0){
                 playerCharacter.changeSpeed(MAX_VELOCITY);
             }
         }
-        super.update(delta);
+        super.update(frameDelta);
     }
 }
