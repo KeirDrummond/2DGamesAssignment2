@@ -16,6 +16,11 @@ import static com.group.game.utility.Constants.PICKUP_PATH;
 import static com.group.game.utility.Constants.MOVESPEED;
 import static com.group.game.utility.Constants.MOONSHINE_SPEED;
 
+/**
+ * Created by Jordan Mitchell for CI261
+ * Assignment 2
+ */
+
 public class Moonshine extends AnimatedSprite implements PowerUpSprite {
 
     private boolean isDisplayed;
