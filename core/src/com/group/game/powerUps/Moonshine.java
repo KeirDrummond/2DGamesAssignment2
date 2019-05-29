@@ -37,7 +37,7 @@ public class Moonshine extends AnimatedSprite implements PowerUpSprite {
     private Rectangle rectangle;
     Sound sound;
 
-    public Moonshine(String atlasString, Texture t, Vector2 pos, HUD hud) {
+    public Moonshine(String atlasString, Texture t, Vector2 pos) {
         super(atlasString, t, pos);
         isDisplayed = true;
         playmode = Animation.PlayMode.LOOP;

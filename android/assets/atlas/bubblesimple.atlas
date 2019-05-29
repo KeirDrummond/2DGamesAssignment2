@@ -1,0 +1,125 @@
+BubbleSimple.png
+size: 800,256
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+
+bubbleSimple
+  rotate: false
+  xy: 25, 100
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 0
+bubbleSimple
+  rotate: false
+  xy: 70, 2
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 1
+bublleSimple
+  rotate: false
+  xy: 105, 100
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 2
+bubbleSimple
+  rotate: false
+  xy: 130, 2
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 3
+bubbleSimple
+  rotate: false
+  xy: 180, 100
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 4
+bubbleSimple
+  rotate: false
+  xy: 210, 2
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 0
+bubbleSimple
+  rotate: false
+  xy: 250, 100
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 1
+bubbleSimple
+  rotate: false
+  xy: 300, 2
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 2
+bubbleSimple
+  rotate: false
+  xy: 350, 100
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 3
+bubbleSimple
+  rotate: false
+  xy: 400, 2
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 4
+bubbleSimple
+  rotate: false
+  xy: 500, 100
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 5
+bubbleSimple
+  rotate: false
+  xy: 600, 2
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 6
+bubbleSimple
+  rotate: false
+  xy: 700, 100
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 7
+bubbleSimple
+  rotate: false
+  xy: 550, 2
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 8
+bubbleSimple
+  rotate: false
+  xy: 800, 100
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 9
+bubbleSimple
+  rotate: false
+  xy: 950, 2
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 10
+bubble
+  rotate: false
+  xy: 1500, 100
+  size: 60, 60
+  orig: 60, 60
+  offset: 0, 0
+  index: 11

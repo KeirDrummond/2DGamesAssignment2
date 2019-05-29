@@ -1,5 +1,7 @@
 package com.group.game.utility;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.maps.MapLayer;
@@ -15,10 +17,12 @@ import com.group.game.physics.WorldManager;
 import com.group.game.powerUps.Moonshine;
 import com.group.game.powerUps.PowerUpSprite;
 import com.group.game.powerUps.RevolverAmmo;
+import com.group.game.powerUps.SpeedUp;
 
 import java.util.Iterator;
 
 //import static com.group.game.utility.Constants.MAX_TIME_TO_NEXT_BONUS;
+import static com.group.game.utility.Constants.BUBBLESIMPLE_PICKUP_PATH;
 import static com.group.game.utility.Constants.MEDIUM;
 import static com.group.game.utility.Constants.MOONSHINE_PICKUP_PATH;
 import static com.group.game.utility.Constants.REVOLVER_AMMO_PICKUP_PATH;
@@ -73,12 +77,18 @@ public class BonusManager {
             //If the tag is RevolverAmmo, creates one.
             if (powerName.equals("RevolverAmmo"))
             {
-                bonusCollection[i] = new RevolverAmmo(REVOLVER_AMMO_PICKUP_PATH, MEDIUM, pos, hud);
+                bonusCollection[i] = new RevolverAmmo(REVOLVER_AMMO_PICKUP_PATH, MEDIUM, pos);
             }
             //If the tag is Moonshine, creates one.
             else if (powerName.equals("Moonshine"))
             {
-                bonusCollection[i] = new Moonshine(MOONSHINE_PICKUP_PATH, MEDIUM, pos, hud);
+                bonusCollection[i] = new Moonshine(MOONSHINE_PICKUP_PATH, MEDIUM, pos);
+            }
+            //If the tag is bubble, creates one.
+            else if (powerName.equals("bubble"))
+            {
+                Texture t = new Texture(Gdx.files.internal("atlas/BubbleSimple.png"));
+                bonusCollection[i] = new SpeedUp(t, pos);
             }
             //If the tag is not recognised, do nothing.
             else

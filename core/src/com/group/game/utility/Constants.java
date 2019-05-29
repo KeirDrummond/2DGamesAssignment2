@@ -56,8 +56,10 @@ public class Constants {
     public static final String REVOLVER_AMMO_PICKUP_PATH = "atlas/revolver_ammo.atlas";
     public static final String REVOLVER_AMMO_PICKUP_SOUND_PATH = "sounds/revolverpickup.wav";
     public static final String MOONSHINE_PICKUP_PATH = "atlas/moonshine.atlas";
+    public static final String BUBBLESIMPLE_PICKUP_PATH = "atlas/bubblesimple.atlas";
 
     public static final float MOONSHINE_SPEED = 5.0f;
+    public static final float BUBBLE_SPEED = 25.0f;
 
     //Sound paths
     public static final String SOUNDTRACK_PATH = "sounds/soundtrack.wav";

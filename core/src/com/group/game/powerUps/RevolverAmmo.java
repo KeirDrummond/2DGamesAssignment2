@@ -23,7 +23,7 @@ public class RevolverAmmo extends AnimatedSprite implements PowerUpSprite {
     Sound sound;
 
     //Constructor to set the default animation and trigger sound.
-    public RevolverAmmo(String atlasString, Texture t, Vector2 pos, HUD hud) {
+    public RevolverAmmo(String atlasString, Texture t, Vector2 pos) {
         super(atlasString, t, pos);
         isDisplayed = true;
         playmode = Animation.PlayMode.LOOP;
